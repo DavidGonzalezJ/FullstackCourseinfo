@@ -1,46 +1,31 @@
-const Header = (props) => {
+const Header = ({course}) => {
   //console.log(props.course.name)
   return(
     <>
-      <h1>{props.course.name}</h1>
+      <h1>{course.name}</h1>
     </>
   )
 }
 
-const Part = (props) => {
+const Part = ({part}) => {
   //console.log(props.part.exercises);
   return(
     <>
       <p>
-        {props.part.name} {props.part.exercises}
+        {part.name} {part.exercises}
       </p>
     </>
   )
 }
 
-const Content = (props) => {
-  ///////////This is the component made with a foreach loop/////////////
-
-  // const contents = [];
-
-  // props.parts.forEach(value =>
-  //   contents.push(<Part part={value.name} exercises={value.exercises}/>)
-  // )
-  
-  // return (
-  //   <>
-  //     {contents}
-  //   </>
-  // );
-
-  ///////////This is the component made with a map loop/////////////
+const Content = ({course}) => {
   return(
     <>
-      {props.course.parts.map((value)=>
-        <Part part = {value} />
+      {course.parts.map((part)=>
+        <Part key={part.id} part = {part} />
       )}
     </>
-  )
+  ) 
 
 }
 
@@ -58,32 +43,39 @@ const Total = (props) => {
   )
 }
 
+const Course = ({course}) => {
+  return(
+    <>
+      <Header course={course}/>
+      <Content course={course}/>
+    </>
+  )
+}
+
 const App = () => {
   const course = {
+    id: 1,
     name: 'Half Stack application development',
     parts: [
       {
         name: 'Fundamentals of React',
-        exercises: 10
+        exercises: 10,
+        id: 1
       },
       {
         name: 'Using props to pass data',
-        exercises: 7
+        exercises: 7,
+        id: 2
       },
       {
         name: 'State of a component',
-        exercises: 14
+        exercises: 14,
+        id: 3
       }
     ]
   }
 
-  return (
-    <div>
-      <Header course ={course}/>
-      <Content course = {course}/>
-      <Total course ={course}/>
-    </div>
-  )
+  return <Course course={course} />
 }
 
 export default App
